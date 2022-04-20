@@ -1,0 +1,46 @@
+article > a {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  padding: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+article > a:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+article > a > img {
+  margin-right: 8px;
+  width: 140px;
+  height: 100px;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+article > a > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px 0;
+}
+
+article > a > div > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+article > a > div > div:first-child {
+  font-size: 24px;
+  align-items: flex-end;
+}
+
+article > a > div > div:first-child > span {
+  color: #252525;
+}
+
+article > a > div > div:last-child {
+  color: #999;
+}

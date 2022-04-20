@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      font-family: Helvetica, sans-serif;
+      background: #f5f6f7;
+    }
+
+    input,
+    button {
+      border-style: none;
+      outline-style: none;
+    }
+
+    .wrap {
+      width: 460px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 600px) {
+      .wrap {
+        width: 100%;
+      }
+    }
+
+    .logo {
+      width: 100%;
+      text-align: center;
+      font-size: 64px;
+      color: #03c75a;
+      margin-top: 80px;
+      margin-bottom: 54px;
+    }
+
+    .control {
+      margin: 8px;
+      border: 1px solid #ddd;
+      padding: 6px;
+      background: #fff;
+    }
+
+    .control>* {
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .control>input {
+      border: none;
+      cursor: pointer;
+      height: 36px;
+      background: none;
+      width: 100%;
+    }
+
+    .green {
+      background: #03c75a;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .green:hover {
+      background: #02a74c;
+    }
+
+    .control>button {
+      background: none;
+      border: none;
+      text-align: center;
+      width: 100%;
+      height: 40px;
+      color: #fff;
+    }
+
+    hr {
+      margin: 30px 8px 30px 8px;
+      border: none;
+      border-top: 1px solid #ddd;
+    }
+
+    h2 {
+      margin: 8px;
+      text-align: center;
+      font-weight: 500;
+      font-size: 22px;
+    }
+
+    .group {
+      margin-top: 20px;
+      padding-right: 8px;
+      display: flex;
+    }
+
+    .group>button {
+      margin-left: 8px;
+      border: 1px solid #03c75a;
+      background: #fff;
+      height: 56px;
+      flex: 1;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .list {
+      width: 100%;
+      text-align: center;
+      list-style: none;
+      padding: 0;
+    }
+
+    .list>span {
+      color: #ddd;
+    }
+
+    .list>li {
+      font-size: 14px;
+      color: #8e8e8e;
+      display: inline;
+    }
+
+    .qr {
+      background-position: -128px 0;
+    }
+
+    .once {
+      background-position: -100px 0;
+    }
+
+    .ic {
+      vertical-align: top;
+      display: inline-block;
+      width: 26px;
+      height: 26px;
+      background-repeat: no-repeat;
+      background-size: 170px 150px;
+      background-image: url(https://ssl.pstatic.net/static/nid/login/m_qr_once.png);
+    }
+
+    .chlog:checked {
+      background-position: 0 0;
+    }
+
+    .chlog {
+      background-position: -30px 0;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .check>label>span {
+      display: inline-block;
+      margin: 4px;
+      height: 26px;
+      line-height: 26px;
+    }
+
+    li,
+    button {
+      cursor: pointer;
+    }
+  </style>
+  <script src="cookie.js"></script>
+</head>
+
+<body style="width: 100vw;">
+  <div class="wrap">
+    <h1 id="_logo" name="logo_" class="logo">LOGO</h1>
+    <div class="control">
+      <input placeholder="아이디" />
+    </div>
+    <div class="control">
+      <input type="password" placeholder="비밀번호" />
+    </div>
+    <div class="control green">
+      <button>로그인</button>
+    </div>
+    <div class="check">
+      <label>
+        <input class="chlog ic" type="checkbox" />
+        <span>로그인 상태 유지</span>
+      </label>
+    </div>
+    <hr />
+    <ul class="list">
+      <li>아이디 찾기</li>
+      <span>|</span>
+      <li>비밀번호 찾기</li>
+      <span>|</span>
+      <li class="toggle">회원가입</li>
+    </ul>
+    <hr />
+  </div>
+  <script>
+    let idinp = document.querySelector('[placeholder=아이디]');
+    let pwinp = document.querySelector('[type=password]');
+    let chbx = document.querySelector('[type=checkbox]');
+    let button = document.querySelector('button');
+    const toggle = document.querySelector('.toggle')
+
+    deleteCookie('user')
+
+    toggle.addEventListener('click', () => {
+      toggle.textContent = toggle.textContent === '로그인' ? '회원가입' : '로그인'
+      button.textContent = button.textContent === '로그인' ? '회원가입' : '로그인'
+    })
+
+    button.addEventListener('click', () => {
+      const id = idinp.value
+      const password = pwinp.value
+      const api = button.textContent === '로그인' ? 'login' : 'register'
+      fetch(`http://localhost:3003/api/user/${api}`, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id,
+          password
+        })
+      }).then(e => e.json()).then(json => {
+        const { result, user, reason } = json
+        const isLogin = button.textContent === '로그인'
+        if (result) {
+          if (isLogin) {
+            setCookie('user', user)
+            location.replace('./index.html')
+          } else {
+            alert('회원가입 성공')
+          }
+        } else {
+          switch (reason) {
+            case 'user not found':
+              alert('없는 사용자 입니다.')
+              break;
+            case 'password not match':
+              alert('비밀번호가 다릅니다.')
+              break;
+            case 'field not fullfilled':
+              alert('잘못된 아이디와 비밀번호 입니다.')
+              break;
+            default:
+              alert(`${isLogin ? '로그인' : '회원가입'} 실패`)
+          }
+
+        }
+      }).catch(e => {
+        console.error(e)
+        console.error(json)
+      })
+    });
+  </script>
+</body>
+
+</html>

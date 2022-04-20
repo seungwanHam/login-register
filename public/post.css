@@ -1,0 +1,212 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans KR';
+}
+
+nav{
+  width: 300px;
+  transform: translate(110%);
+  position:fixed;
+  top: 51px;
+  right: 0;
+  height: calc(100vw - 51px);
+  transition: all .3s;
+  background: white;
+  border-left: 1px solid #ccc;
+  z-index: 1;
+  box-shadow: 0 0 12px #333;
+}
+
+nav > ul {
+  list-style: none;
+}
+
+nav > ul > li {
+  height: 50px;
+  padding: 0 12px;
+  line-height: 50px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+
+nav.open{
+  transform: translate(0%)
+}
+
+@media (max-width: 2000px){
+  article {
+    width: 900px;
+  }
+}
+
+@media (max-width: 1200px){
+  article {
+    width: 700px;
+  }
+}
+
+@media (max-width: 900px){
+  article{
+    width: 90%;
+  }
+}
+@media (max-width: 700px){
+  article {
+    width: 100%;
+  }
+  header > input {
+    display:none;
+  }
+}
+
+header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: white;
+  padding: 5px;
+  height: 51px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  display:flex;
+  align-items: center;
+  z-index: 2;
+}
+header > span {
+  margin-left: 5px;
+  font-size: 18px;
+  color: #252525;
+  margin-right: auto;
+  flex-shrink: 0;
+}
+header > input {
+  border: 1px solid #ccc;
+  border-radius: none;
+  outline: none;
+  height: 32px;
+  padding: 0 6px;
+}
+header > i{
+  font-size: 20px;
+  padding: 0 8px;
+}
+article {
+  padding-top: 51px;
+  margin: 0 auto;
+}
+
+.title{
+  height: 260px;
+  background-image: url("https://images.ctfassets.net/hrltx12pl8hq/4f6DfV5DbqaQUSw0uo0mWi/ff068ff5fc855601751499d694c0111a/shutterstock_376532611.jpg?fit=fill&w=800&h=300");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.title > h2{
+  padding: 30px 40px;
+  font-size: 20px;
+}
+
+.title > h1 {
+  padding: 20px 30px;
+  font-size: 36px;
+}
+
+.title > div{
+  margin: 36px;
+  display:flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title > div > img {
+  border-radius: 6px;
+}
+
+.content {
+  padding: 12px 0;
+  transition: all .3s;
+}
+
+.blur{
+  filter: blur(5px);
+}
+
+.content > * {
+  animation-name: fadein;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.content.reverse > * {
+  opacity: 0;
+}
+
+.content > p{
+  font-size: 16px;
+  margin: 12px;
+  line-height: 2;
+}
+
+.quote {
+  margin: 20px;
+  border-left: 8px solid #333;
+  padding: 20px;
+}
+
+.content > img{
+  width: 100%;
+}
+
+.caption {
+  display:flex;
+  width: 100%;
+  justify-content: center;
+  font-size:13px;
+  padding-bottom: 6px;
+}
+
+.tags{
+  width: 100%;
+  display:flex;
+  gap: 8px;
+  padding: 12px 0;
+}
+
+.tags > span{
+  padding: 8px 16px;
+  background: #ccc;
+  font-size: 14px;
+}
+
+footer > button {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background: white;
+  border: 1px solid #ccc;
+  transition: all .3s;
+  cursor: pointer;
+}
+
+footer > button:active {
+  background: #DDD;
+}
+
+footer > button:hover{
+  background: #aaa;
+}
+
+@keyframes fadein{
+  from{
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
